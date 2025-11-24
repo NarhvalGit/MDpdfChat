@@ -8,16 +8,205 @@ from xhtml2pdf import pisa
 app = Flask(__name__)
 
 
-def convert_markdown_to_html(content: str) -> str:
-    """Convert Markdown text to sanitized HTML wrapped in a Narhval-styled template."""
+def convert_markdown_to_html(content: str, for_pdf: bool = False) -> str:
+    """Convert Markdown text to sanitized HTML wrapped in a Narhval-styled template.
+
+    Args:
+        content: Markdown content to convert
+        for_pdf: If True, uses direct hex values instead of CSS variables (xhtml2pdf compatible)
+    """
     html_body = markdown(content, extensions=["extra", "toc", "sane_lists"])
-    return f"""
-    <html>
-        <head>
-            <meta charset='utf-8'>
-            <meta name='viewport' content='width=device-width, initial-scale=1'>
-            <title>Narhval Document</title>
-            <style>
+
+    # For PDF generation, xhtml2pdf doesn't support CSS variables, so use direct hex values
+    if for_pdf:
+        css_content = """
+                * {{
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }}
+
+                body {{
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    line-height: 1.7;
+                    color: #333;
+                    max-width: 900px;
+                    margin: 0 auto;
+                    padding: 40px 20px;
+                    background: #ffffff;
+                }}
+
+                /* Headers */
+                h1 {{
+                    color: #014f67;
+                    font-size: 2.5rem;
+                    font-weight: 700;
+                    margin: 2rem 0 1.5rem 0;
+                    padding-bottom: 0.75rem;
+                    border-bottom: 4px solid #014f67;
+                    line-height: 1.3;
+                }}
+
+                h1:first-child {{
+                    margin-top: 0;
+                }}
+
+                h2 {{
+                    color: #008080;
+                    font-size: 2rem;
+                    font-weight: 600;
+                    margin: 2rem 0 1rem 0;
+                    padding-bottom: 0.5rem;
+                    border-bottom: 3px solid #008080;
+                    line-height: 1.3;
+                }}
+
+                h3 {{
+                    color: #014f67;
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                    margin: 1.75rem 0 1rem 0;
+                    line-height: 1.3;
+                }}
+
+                h4 {{
+                    color: #008080;
+                    font-size: 1.25rem;
+                    font-weight: 600;
+                    margin: 1.5rem 0 0.875rem 0;
+                    line-height: 1.3;
+                }}
+
+                h5, h6 {{
+                    color: #014f67;
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    margin: 1.25rem 0 0.75rem 0;
+                    line-height: 1.3;
+                }}
+
+                /* Paragraphs and text */
+                p {{
+                    margin: 1rem 0;
+                    text-align: justify;
+                }}
+
+                strong {{
+                    color: #014f67;
+                    font-weight: 600;
+                }}
+
+                em {{
+                    color: #008080;
+                }}
+
+                /* Links */
+                a {{
+                    color: #008080;
+                    text-decoration: none;
+                    font-weight: 500;
+                    border-bottom: 1px solid #008080;
+                }}
+
+                /* Lists */
+                ul, ol {{
+                    margin: 1rem 0 1rem 2rem;
+                    padding: 0;
+                }}
+
+                li {{
+                    margin: 0.5rem 0;
+                    line-height: 1.7;
+                }}
+
+                /* Code */
+                code {{
+                    background: #f0f5f7;
+                    color: #014f67;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                    font-family: 'Courier New', Courier, monospace;
+                    font-size: 0.9em;
+                    border: 1px solid #d0dfe4;
+                }}
+
+                pre {{
+                    background: #f5f9fa;
+                    border-left: 4px solid #008080;
+                    padding: 1.25rem;
+                    border-radius: 6px;
+                    margin: 1.5rem 0;
+                }}
+
+                pre code {{
+                    background: none;
+                    border: none;
+                    padding: 0;
+                    color: #333;
+                    font-size: 0.95em;
+                }}
+
+                /* Tables */
+                table {{
+                    border-collapse: collapse;
+                    width: 100%;
+                    margin: 1.5rem 0;
+                }}
+
+                thead {{
+                    background: #014f67;
+                    color: #fffbf0;
+                }}
+
+                th {{
+                    padding: 12px 16px;
+                    text-align: left;
+                    font-weight: 600;
+                    font-size: 0.95rem;
+                }}
+
+                td {{
+                    padding: 10px 16px;
+                    border-bottom: 1px solid #e0e0e0;
+                }}
+
+                tbody tr:nth-child(even) {{
+                    background: #f9fafb;
+                }}
+
+                /* Blockquotes */
+                blockquote {{
+                    border-left: 4px solid #feb098;
+                    padding: 1rem 1.5rem;
+                    margin: 1.5rem 0;
+                    background: #fef8f5;
+                    border-radius: 0 6px 6px 0;
+                    color: #014f67;
+                    font-style: italic;
+                }}
+
+                blockquote p {{
+                    margin: 0.5rem 0;
+                }}
+
+                /* Horizontal rule */
+                hr {{
+                    border: none;
+                    height: 3px;
+                    background: #008080;
+                    margin: 2rem 0;
+                }}
+
+                /* Images */
+                img {{
+                    max-width: 100%;
+                    height: auto;
+                    margin: 1.5rem 0;
+                }}
+        """
+    else:
+        # For HTML export, use CSS variables (modern browser support)
+        css_content = """
                 :root {{
                     --narhval-primary: #014f67;
                     --narhval-teal: #008080;
@@ -280,6 +469,16 @@ def convert_markdown_to_html(content: str) -> str:
                         padding: 8px 10px;
                     }}
                 }}
+        """
+
+    return f"""
+    <html>
+        <head>
+            <meta charset='utf-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1'>
+            <title>Narhval Document</title>
+            <style>
+                {css_content}
             </style>
         </head>
         <body>
@@ -314,11 +513,10 @@ def index():
         return render_template("index.html", error="Kies een exportformaat (HTML of PDF)."), 400
 
     content = file.stream.read().decode("utf-8", errors="ignore")
-    html_content = convert_markdown_to_html(content)
-
     filename_stem = Path(file.filename).stem or "document"
 
     if export_format == "html":
+        html_content = convert_markdown_to_html(content, for_pdf=False)
         html_bytes = html_content.encode("utf-8")
         return send_file(
             BytesIO(html_bytes),
@@ -327,6 +525,8 @@ def index():
             download_name=f"{filename_stem}.html",
         )
 
+    # For PDF, use direct hex values instead of CSS variables
+    html_content = convert_markdown_to_html(content, for_pdf=True)
     pdf_bytes = html_to_pdf_bytes(html_content)
     return send_file(
         BytesIO(pdf_bytes),
