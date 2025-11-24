@@ -3,48 +3,263 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Markdown naar PDF/HTML</title>
+    <title>Markdown Exporter - Narhval</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        :root {
+            --narhval-primary: #014f67;
+            --narhval-teal: #008080;
+            --narhval-accent: #feb098;
+            --narhval-cream: #fffbf0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .main-header {
+            background: var(--narhval-primary);
+            color: var(--narhval-cream);
+            padding: 2.5rem 0;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 12px rgba(1, 79, 103, 0.3);
+        }
+
+        .main-header h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+
+        .main-header p {
+            color: var(--narhval-cream);
+            opacity: 0.9;
+            margin: 0.5rem 0 0 0;
+            font-size: 1.1rem;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            color: var(--narhval-teal);
+            font-weight: 600;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--narhval-teal);
+        }
+
+        .form-label {
+            color: var(--narhval-primary);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            font-size: 1.05rem;
+        }
+
+        .form-control {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--narhval-teal);
+            box-shadow: 0 0 0 0.2rem rgba(0, 128, 128, 0.15);
+        }
+
+        .form-text {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .form-check {
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .form-check:hover {
+            background: #e9ecef;
+            border-color: var(--narhval-teal);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--narhval-teal);
+            border-color: var(--narhval-teal);
+        }
+
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.2rem rgba(0, 128, 128, 0.15);
+        }
+
+        .form-check-label {
+            color: var(--narhval-primary);
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .btn-submit {
+            background: var(--narhval-accent);
+            border: none;
+            color: var(--narhval-primary);
+            font-weight: 600;
+            padding: 0.875rem 2.5rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(254, 176, 152, 0.3);
+        }
+
+        .btn-submit:hover {
+            background: #fda582;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(254, 176, 152, 0.4);
+            color: var(--narhval-primary);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .alert-danger {
+            background: #fee;
+            border: 2px solid #fcc;
+            color: #c33;
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, var(--narhval-primary) 0%, var(--narhval-teal) 100%);
+            color: var(--narhval-cream);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            box-shadow: 0 4px 12px rgba(1, 79, 103, 0.2);
+        }
+
+        .info-box h3 {
+            color: var(--narhval-cream);
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .info-box ul {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+
+        .info-box li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .feature-badge {
+            display: inline-block;
+            background: var(--narhval-accent);
+            color: var(--narhval-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-header h1 {
+                font-size: 1.875rem;
+            }
+
+            .content-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
 </head>
-<body class="bg-light">
-    <div class="container py-5">
+<body>
+    <div class="main-header">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h1>Markdown Exporter</h1>
+                    <p>Converteer uw Markdown documenten naar professionele PDF of HTML bestanden</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container pb-5">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h1 class="h3 mb-3">Markdown exporteren</h1>
-                        <p class="text-muted">Upload een Markdown-bestand en kies het gewenste exportformaat.</p>
+                <div class="content-card">
+                    <h2>Document Uploaden <span class="feature-badge">Snel & Veilig</span></h2>
 
-                        {% if error %}
-                        <div class="alert alert-danger" role="alert">
-                            {{ error }}
-                        </div>
-                        {% endif %}
-
-                        <form method="POST" enctype="multipart/form-data" class="row gy-3">
-                            <div class="col-12">
-                                <label for="file" class="form-label">Markdown bestand</label>
-                                <input class="form-control" type="file" id="file" name="file" accept=".md,.markdown,.txt" required>
-                                <div class="form-text">Bestand wordt niet opgeslagen; het wordt alleen gebruikt voor conversie.</div>
-                            </div>
-
-                            <div class="col-12">
-                                <label class="form-label">Exporteer als</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="format" id="formatHtml" value="html" checked>
-                                    <label class="form-check-label" for="formatHtml">HTML</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="format" id="formatPdf" value="pdf">
-                                    <label class="form-check-label" for="formatPdf">PDF</label>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Exporteren</button>
-                            </div>
-                        </form>
+                    {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Fout:</strong> {{ error }}
                     </div>
+                    {% endif %}
+
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="mb-4">
+                            <label for="file" class="form-label">Markdown bestand</label>
+                            <input class="form-control" type="file" id="file" name="file" accept=".md,.markdown,.txt" required>
+                            <div class="form-text">
+                                <svg width="14" height="14" style="margin-right: 4px; vertical-align: middle;" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                </svg>
+                                Uw bestand wordt niet opgeslagen en wordt alleen gebruikt voor conversie.
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Exporteer als</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="format" id="formatHtml" value="html" checked>
+                                <label class="form-check-label" for="formatHtml">
+                                    <strong>HTML</strong> - Geoptimaliseerd voor web en delen
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="format" id="formatPdf" value="pdf">
+                                <label class="form-check-label" for="formatPdf">
+                                    <strong>PDF</strong> - Ideaal voor printen en archiveren
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-submit">
+                                Exporteren →
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="info-box">
+                    <h3>Ondersteunde Features</h3>
+                    <ul>
+                        <li>✓ Standaard Markdown syntax (koppen, lijsten, links, afbeeldingen)</li>
+                        <li>✓ Tabellen en codeblokken met syntax highlighting</li>
+                        <li>✓ Automatische inhoudsopgave generatie</li>
+                        <li>✓ Export naar HTML of PDF formaat</li>
+                    </ul>
                 </div>
             </div>
         </div>
