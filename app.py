@@ -168,22 +168,21 @@ img {
     margin: 15px 0;
 }"""
     else:
-        # For HTML export, use CSS variables (modern browser support)
-        css_content = """
-                :root {{
-                    --narhval-primary: #014f67;
-                    --narhval-teal: #008080;
-                    --narhval-accent: #feb098;
-                    --narhval-cream: #fffbf0;
-                }}
+        # For HTML export, use CSS with better styling
+        css_content = """:root {
+    --narhval-primary: #014f67;
+    --narhval-teal: #008080;
+    --narhval-accent: #feb098;
+    --narhval-cream: #fffbf0;
+}
 
-                * {{
+                * {
                     margin: 0;
                     padding: 0;
                     box-sizing: border-box;
-                }}
+                }
 
-                body {{
+                body {
                     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                     line-height: 1.7;
                     color: #333;
@@ -191,10 +190,10 @@ img {
                     margin: 0 auto;
                     padding: 40px 20px;
                     background: #ffffff;
-                }}
+                }
 
                 /* Headers */
-                h1 {{
+                h1 {
                     color: var(--narhval-primary);
                     font-size: 2.5rem;
                     font-weight: 700;
@@ -202,13 +201,13 @@ img {
                     padding-bottom: 0.75rem;
                     border-bottom: 4px solid var(--narhval-primary);
                     line-height: 1.3;
-                }}
+                }
 
-                h1:first-child {{
+                h1:first-child {
                     margin-top: 0;
-                }}
+                }
 
-                h2 {{
+                h2 {
                     color: var(--narhval-teal);
                     font-size: 2rem;
                     font-weight: 600;
@@ -216,80 +215,80 @@ img {
                     padding-bottom: 0.5rem;
                     border-bottom: 3px solid var(--narhval-teal);
                     line-height: 1.3;
-                }}
+                }
 
-                h3 {{
+                h3 {
                     color: var(--narhval-primary);
                     font-size: 1.5rem;
                     font-weight: 600;
                     margin: 1.75rem 0 1rem 0;
                     line-height: 1.3;
-                }}
+                }
 
-                h4 {{
+                h4 {
                     color: var(--narhval-teal);
                     font-size: 1.25rem;
                     font-weight: 600;
                     margin: 1.5rem 0 0.875rem 0;
                     line-height: 1.3;
-                }}
+                }
 
-                h5, h6 {{
+                h5, h6 {
                     color: var(--narhval-primary);
                     font-size: 1.1rem;
                     font-weight: 600;
                     margin: 1.25rem 0 0.75rem 0;
                     line-height: 1.3;
-                }}
+                }
 
                 /* Paragraphs and text */
-                p {{
+                p {
                     margin: 1rem 0;
                     text-align: justify;
-                }}
+                }
 
-                strong {{
+                strong {
                     color: var(--narhval-primary);
                     font-weight: 600;
-                }}
+                }
 
-                em {{
+                em {
                     color: var(--narhval-teal);
-                }}
+                }
 
                 /* Links */
-                a {{
+                a {
                     color: var(--narhval-teal);
                     text-decoration: none;
                     font-weight: 500;
                     border-bottom: 1px solid var(--narhval-teal);
                     transition: all 0.2s ease;
-                }}
+                }
 
-                a:hover {{
+                a:hover {
                     color: var(--narhval-primary);
                     border-bottom-color: var(--narhval-accent);
                     background: rgba(254, 176, 152, 0.1);
-                }}
+                }
 
                 /* Lists */
-                ul, ol {{
+                ul, ol {
                     margin: 1rem 0 1rem 2rem;
                     padding: 0;
-                }}
+                }
 
-                li {{
+                li {
                     margin: 0.5rem 0;
                     line-height: 1.7;
-                }}
+                }
 
-                li::marker {{
+                li::marker {
                     color: var(--narhval-teal);
                     font-weight: 600;
-                }}
+                }
 
                 /* Code */
-                code {{
+                code {
                     background: rgba(1, 79, 103, 0.05);
                     color: var(--narhval-primary);
                     padding: 2px 6px;
@@ -297,9 +296,9 @@ img {
                     font-family: 'Courier New', Courier, monospace;
                     font-size: 0.9em;
                     border: 1px solid rgba(1, 79, 103, 0.1);
-                }}
+                }
 
-                pre {{
+                pre {
                     background: linear-gradient(135deg, rgba(1, 79, 103, 0.03) 0%, rgba(0, 128, 128, 0.03) 100%);
                     border-left: 4px solid var(--narhval-teal);
                     padding: 1.25rem;
@@ -307,58 +306,58 @@ img {
                     overflow-x: auto;
                     margin: 1.5rem 0;
                     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-                }}
+                }
 
-                pre code {{
+                pre code {
                     background: none;
                     border: none;
                     padding: 0;
                     color: #333;
                     font-size: 0.95em;
-                }}
+                }
 
                 /* Tables */
-                table {{
+                table {
                     border-collapse: collapse;
                     width: 100%;
                     margin: 1.5rem 0;
                     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
                     border-radius: 8px;
                     overflow: hidden;
-                }}
+                }
 
-                thead {{
+                thead {
                     background: linear-gradient(135deg, var(--narhval-primary) 0%, var(--narhval-teal) 100%);
                     color: var(--narhval-cream);
-                }}
+                }
 
-                th {{
+                th {
                     padding: 12px 16px;
                     text-align: left;
                     font-weight: 600;
                     font-size: 0.95rem;
                     letter-spacing: 0.3px;
-                }}
+                }
 
-                td {{
+                td {
                     padding: 10px 16px;
                     border-bottom: 1px solid #e0e0e0;
-                }}
+                }
 
-                tbody tr:nth-child(even) {{
+                tbody tr:nth-child(even) {
                     background: rgba(1, 79, 103, 0.02);
-                }}
+                }
 
-                tbody tr:hover {{
+                tbody tr:hover {
                     background: rgba(0, 128, 128, 0.05);
-                }}
+                }
 
-                tbody tr:last-child td {{
+                tbody tr:last-child td {
                     border-bottom: none;
-                }}
+                }
 
                 /* Blockquotes */
-                blockquote {{
+                blockquote {
                     border-left: 4px solid var(--narhval-accent);
                     padding: 1rem 1.5rem;
                     margin: 1.5rem 0;
@@ -366,72 +365,72 @@ img {
                     border-radius: 0 6px 6px 0;
                     color: var(--narhval-primary);
                     font-style: italic;
-                }}
+                }
 
-                blockquote p {{
+                blockquote p {
                     margin: 0.5rem 0;
-                }}
+                }
 
                 /* Horizontal rule */
-                hr {{
+                hr {
                     border: none;
                     height: 3px;
                     background: linear-gradient(90deg, var(--narhval-primary) 0%, var(--narhval-teal) 50%, var(--narhval-accent) 100%);
                     margin: 2rem 0;
                     border-radius: 2px;
-                }}
+                }
 
                 /* Images */
-                img {{
+                img {
                     max-width: 100%;
                     height: auto;
                     border-radius: 8px;
                     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
                     margin: 1.5rem 0;
-                }}
+                }
 
                 /* Print styles */
-                @media print {{
-                    body {{
+                @media print {
+                    body {
                         max-width: 100%;
                         padding: 20px;
-                    }}
+                    }
 
-                    h1, h2, h3, h4, h5, h6 {{
+                    h1, h2, h3, h4, h5, h6 {
                         page-break-after: avoid;
-                    }}
+                    }
 
-                    pre, blockquote, table {{
+                    pre, blockquote, table {
                         page-break-inside: avoid;
-                    }}
-                }}
+                    }
+                }
 
                 /* Mobile responsive */
-                @media (max-width: 768px) {{
-                    body {{
+                @media (max-width: 768px) {
+                    body {
                         padding: 20px 15px;
-                    }}
+                    }
 
-                    h1 {{
+                    h1 {
                         font-size: 2rem;
-                    }}
+                    }
 
-                    h2 {{
+                    h2 {
                         font-size: 1.6rem;
-                    }}
+                    }
 
-                    h3 {{
+                    h3 {
                         font-size: 1.3rem;
-                    }}
+                    }
 
-                    table {{
+                    table {
                         font-size: 0.9rem;
-                    }}
+                    }
 
-                    th, td {{
+                    th, td {
                         padding: 8px 10px;
-                    }}
-                }}
+                    }
+                }
         """
 
     return f"""
